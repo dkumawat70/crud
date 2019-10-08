@@ -1,0 +1,87 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script>
+    var addArr = [];
+    var row = '';
+    $(document).ready(function () {
+                $.ajax({
+                url: '@Url.Action("Getdata", "Home")',
+                data: {},
+                type: 'GET',
+                dataType: "json",
+                success: function (data) {
+                    for (var i = 0; i < data.length; i++) {
+                        row = '<tr><td><div align="center"><input type="checkbox" id="chk_id_' + i + '"  onclick="check(' + i + ',' + data[i].id + ')"></td>';
+                        row += '<td><div align="center"> <i class="fa fa-pencil-square-o" aria-hidden="true" onclick="edit(' + data[i].id + ')"></i></td>';
+                        row += '<td><div align="center"> ' + data[i].id + '</td>';
+                        row += '<td><div align="center"> ' + data[i].firstname + '</td>';
+                        row += '<td><div align="center"> ' + data[i].lastname + '</td>';
+                        row += '<td><div align="center"> ' + data[i].email + '</td>';
+                        row += '<td><div align="center"> ' + data[i].mobile + '</td>';
+                        row += '<td><div align="center"> <img id="Mitemimg" class="qaimg" src="' + data[i].image + '"  style="width:30px"></td>';
+                        row += '<td><div align="center"> ' + data[i].salary + '</td></tr>';
+                        $("#tblImg12").append(row);
+                    }
+                }
+            });
+    });
+    function check(i,id) {
+        var isChecked = $("#chk_id_" + i).is(":checked");
+        if (isChecked == true) {
+            addArr.push({ "id": id });
+        } else
+        {
+            for (var i = 0; i < addArr.length; i++) {
+                if (addArr[i].id == id) {
+                    addArr.splice(i, 1);
+                    break;
+                }
+            }
+        }
+        if (addArr.length > 0) {
+            $("#btn_delete").show();
+        } else {
+            $("#btn_delete").hide();
+        }
+    }
+    function deleteUser() {
+        for (var i = 0; i < addArr.length; i++) {
+             $.ajax({
+                url: '@Url.Action("DeleteUser", "Home")',
+                 data: { "id": addArr[i].id},
+                type: 'GET',
+                dataType: "json",
+                 success: function (data) {
+                }
+            });
+            alert('Record deleted');
+            location.reload();
+        }
+    }
+    function edit(id) {
+        var url = "../Home/AddUser?id=" + id;
+        window.location.href = url;        
+    }
+
+</script>
+
+<input type="button" id="btn_delete" onclick="deleteUser()" value="Delete" class="btn btn-danger" style="margin-top:20px;margin-left:10px;display:none" />
+<table class="table" style="margin-top:20px">
+    <thead>
+        <tr>
+            <th style="text-align:center">Delete</th>
+            <th style="text-align:center">Edit</th>
+            <th style="text-align:center">ID</th>
+            <th style="text-align:center">First Name</th>
+            <th style="text-align:center">Last Name</th>
+            <th style="text-align:center">Email</th>
+            <th style="text-align:center">Mobile</th>
+            <th style="text-align:center">Image</th>
+            <th style="text-align:center">Salary</th>
+        </tr>
+    </thead>
+    <tbody id="tblImg12"></tbody>
+</table>

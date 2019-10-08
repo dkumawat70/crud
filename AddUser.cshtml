@@ -1,0 +1,78 @@
+﻿@model WebApplication1.Models.UserInfo1
+@{
+    ViewBag.Title = "AddUser";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>AddUser</h2>
+<form>
+    <input type="hidden" id="id" value="@Model.id" />
+
+    <label id="lbl_firstname">First Name : </label>
+    <input type="text" id="firstname" value="@Model.firstname" name="firstname" /><br />
+
+    <label id="lbl_lastname">Last Name : </label>
+    <input type="text" id="lastname" value="@Model.lastname" name="lastname"/><br />
+
+    <label id="lbl_email">Email : </label>
+    <input type="text" id="email" value="@Model.email" name="email"/><br />
+
+    <label id="lbl_mobile">Mobile Name : </label>
+    <input type="text" id="mobile" value="@Model.mobile" name="firstname"/><br />
+
+    <label id="lbl_image">Select a file: </label>
+    <img  src="@Model.image" width="30px"/>
+    <input type="file" id="file" name="image" ><br />
+
+    <label id="lbl_salary">Salary : </label>
+    <input type="text" id="salary" value="@Model.salary" name="salary"/><br />
+</form>
+<input type="button" value="Save" onclick="Save()" />
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+<script>
+    function Save() {
+
+        if (window.FormData !== undefined) {
+
+            var fileUpload = $("#file").get(0);
+            var files = fileUpload.files;
+
+            // Create FormData object
+            var fileData = new FormData();
+
+            // Looping over all files and add it to FormData object
+            for (var i = 0; i < files.length; i++) {
+                fileData.append(files[i].name, files[i]);
+            }
+
+            // Adding one more key to FormData object
+            fileData.append('firstname', $("#firstname").val());
+            fileData.append('lastname', $("#lastname").val());
+            fileData.append('email', $("#email").val());
+            fileData.append('mobile', $("#mobile").val());
+            fileData.append('salary', $("#salary").val());
+            fileData.append('id', $("#id").val());
+            $.ajax({
+                url: '/Home/AddUser',
+                type: "POST",
+                contentType: false, // Not to set any content header
+                processData: false, // Not to process data
+                data: fileData,
+                success: function (result) {
+                    alert(result);
+                    $("#firstname").val('');
+                    $("#lastname").val('');
+                    $("#email").val('');
+                    $("#mobile").val('');
+                    $("#salary").val('');
+                    $("#file").val('');
+                },
+                error: function (err) {
+                    alert(err.statusText);
+                }
+            });
+        } else {
+            alert("FormData is not supported.");
+        }
+    }
+</script>
