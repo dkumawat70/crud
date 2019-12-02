@@ -1,0 +1,313 @@
+--update
+/*-------------------------------------------------------------------------------------------------------------
+	Created By			:	Deepak
+	Created On			:	24th SEP, 2019
+	Last Modified By	:	 
+	Last Modified On	:	 
+	Input Variables		:	1. @XMLData XML
+							 
+	Output Parameters	:	None
+	Resultsets			:	-
+	Sample Execution	:	EXECUTE  [usp_UpdateCutSPectBulkInsert] '<?xml version="1.0" encoding="UTF-8"?>
+							<UplaodCutspetc>
+							   <UplaodCutspetcData>
+								  <tpi_cut_std_code>RR</tpi_cut_std_code>
+								  <tpi_cut_std_name>TestCut New 2</tpi_cut_std_name>
+								  <tpi_dim_scrnval>40-50</tpi_dim_scrnval>
+								  <tpi_approveby>data@decintell.com</tpi_approveby>
+								  <tpi_request_type>N</tpi_request_type>
+								  <tpi_request_id>11272</tpi_request_id>
+								  <tbl_id>46584</tbl_id>
+								  <tpi_fsize_code>08</tpi_fsize_code>
+								  <tpi_ftype_code>FL</tpi_ftype_code>
+								  <tpi_fstype_code>X</tpi_fstype_code>
+								  <tpi_cut_code>2</tpi_cut_code>
+								  <tpi_dim_dwgval>0</tpi_dim_dwgval>
+								  <tpi_cut_application>OVERCUT</tpi_cut_application>
+								  <tpi_verno>0</tpi_verno>
+								  <tpi_dim_code>S1O</tpi_dim_code>
+								  <tpi_dim_name>FLAT SIDE1</tpi_dim_name>
+							   </UplaodCutspetcData>
+							   </UplaodCutspetc>'  
+									 
+									 
+	Purpose				:	Bulk update Subtype Value
+	Revision			:	1. 
+	--------------------------------------------------------------------------------------------------------------------------------------------------*/
+    alter PROCEDURE [dbo].[usp_UpdateCutSPectBulkInsert] 
+
+		@XMLData XML		
+
+        AS
+        BEGIN
+    
+	SET NOCOUNT ON;
+
+	DECLARE @bResult BIT = 0    
+
+	DECLARE @RowCnt INT, @intFlag INT, @cutStandardCode VARCHAR(2), @cutStandardName VARCHAR(50), @pm_dim_parm_scrnvalue NVARCHAR(100)
+	DECLARE @fcl_createby NVARCHAR(100), @tpi_request_type VARCHAR(1), @tpi_request_id  INT, @_id INT , @tbl_id INT , @fileSize VARCHAR(50)
+	DECLARE @fileTypeCode VARCHAR(50), @FileSubType VARCHAR(50), @fileCutType VARCHAR(50), @prc_parameter_value  NVARCHAR(100), @tpi_dim_code VARCHAR(500)
+	DECLARE @pm_dim_parm_dwgvalue NVARCHAR(80), @prc_parameter_name NVARCHAR(100), @fcl_verno SMALLINT 
+	SET @intFlag = 1
+
+	IF OBJECT_ID('tempdb..#CutSpectData') IS NOT NULL
+	BEGIN
+		DROP TABLE #CutSpectData
+	END    
+
+	CREATE TABLE #CutSpectData
+	(  
+	    _id INT IDENTITY(1,1) NOT NULL,
+	    tpi_cut_std_code VARCHAR(2), 
+	    tpi_cut_std_name VARCHAR(50) , 
+	    tpi_dim_scrnval  NVARCHAR(100),
+	    tpi_approvedate  DATETIME,
+	    tpi_approveby    NVARCHAR(100),
+	    tpi_request_type VARCHAR(1),
+	    tpi_request_id   INT,
+		tbl_id INT,
+		fileSize VARCHAR(50),
+		fileTypeCode VARCHAR(50),
+		FileSubType VARCHAR(50),
+		fileCutType VARCHAR(50),
+	    prc_parameter_value NVARCHAR(100),
+		tpi_dim_code VARCHAR(500),
+		pm_dim_parm_dwgvalue NVARCHAR(80),
+		prc_parameter_name NVARCHAR(100),
+		fcl_verno SMALLINT,
+		tpi_dim_name VARCHAR(100)
+	)  
+	  		
+	INSERT #CutSpectData ( tpi_cut_std_code, tpi_cut_std_name, tpi_dim_scrnval, tpi_approveby, tpi_request_type, tpi_request_id, tbl_id, 
+	fileSize, fileTypeCode, FileSubType, fileCutType, pm_dim_parm_dwgvalue, prc_parameter_name, fcl_verno, tpi_dim_code, tpi_dim_name  )  
+	SELECT COALESCE([Table].[Column].value('tpi_cut_std_code[1]', 'VARCHAR(2)'),'') as 'tpi_cut_std_code',  
+		   [Table].[Column].value('tpi_cut_std_name[1]', 'VARCHAR(50)') as 'tpi_cut_std_name',
+		   [Table].[Column].value('tpi_dim_scrnval[1]', 'NVARCHAR(100)') as 'tpi_dim_scrnval',		  
+		   [Table].[Column].value('tpi_approveby[1]', 'NVARCHAR(100)') as 'tpi_approveby',
+		   [Table].[Column].value('tpi_request_type[1]', 'VARCHAR(1)') as 'tpi_request_type',
+		   [Table].[Column].value('tpi_request_id[1]', 'INT') as 'tpi_request_id',
+		   [Table].[Column].value('tbl_id[1]', 'INT') as 'tbl_id',				   
+		   [Table].[Column].value('tpi_fsize_code[1]', 'VARCHAR(50)') as 'tpi_fsize_code',
+		   [Table].[Column].value('tpi_ftype_code[1]', 'VARCHAR(50)') as 'tpi_ftype_code',		  
+		   [Table].[Column].value('tpi_fstype_code[1]','VARCHAR(50)') as 'tpi_fstype_code',
+		   [Table].[Column].value('tpi_cut_code[1]', 'VARCHAR(50)') as 'tpi_cut_code',
+		   [Table].[Column].value('tpi_dim_dwgval[1]','NVARCHAR(80)') as 'tpi_dim_dwgval',
+		   [Table].[Column].value('tpi_cut_application[1]', 'VARCHAR(50)') as 'tpi_cut_application',
+		   [Table].[Column].value('tpi_verno[1]', 'SMALLINT') as 'tpi_verno',		  
+		   [Table].[Column].value('tpi_dim_code[1]','VARCHAR(500)') as 'tpi_dim_code',
+		   [Table].[Column].value('tpi_dim_name[1]','VARCHAR(500)') as 'tpi_dim_name'
+		   	
+     FROM @XMLData.nodes('/UplaodCutspetc/UplaodCutspetcData') as [Table]([Column])   
+
+	 SELECT @RowCnt = COUNT(_id) FROM #CutSpectData 
+	 
+	 WHILE( @intFlag <= @RowCnt )
+	
+      BEGIN
+	       
+		   BEGIN TRY
+
+		     SELECT @cutStandardCode = tpi_cut_std_code, @cutStandardName = tpi_cut_std_name , @pm_dim_parm_scrnvalue = tpi_dim_scrnval,
+					@fcl_createby = tpi_approveby, @tpi_request_type = tpi_request_type, @tpi_request_id = tpi_request_id, @tbl_id = tbl_id,
+					@fileSize = fileSize, @FileTypeCode =	fileTypeCode, @FileSubType = FileSubType, @fileCutType = fileCutType,
+					@prc_parameter_value = tpi_dim_name, @tpi_dim_code = tpi_dim_code, @pm_dim_parm_dwgvalue = pm_dim_parm_dwgvalue,
+				    @prc_parameter_name = prc_parameter_name, @fcl_verno = fcl_verno				
+			 FROM #CutSpectData  WHERE _id = @intFlag
+
+				 BEGIN TRANSACTION 		
+				  
+				  IF(@tbl_id > 0)
+
+				  BEGIN
+				 
+					    UPDATE [dbo].[tb_tpi_master] SET tpi_cut_std_code = @cutStandardCode, tpi_cut_std_name = @cutStandardName,
+					   tpi_dim_scrnval = @pm_dim_parm_scrnvalue, tpi_approvedate=GetDate(), tpi_approveby = @fcl_createby
+					   WHERE tpi_request_type = @tpi_request_type  AND tpi_request_id = @tpi_request_id  AND _id = @tbl_id
+
+					   PRINT 'Update'
+					   UPDATE [dbo].[tb_production_sku] SET  [pr_cut_standard] = @cutStandardCode WHERE [pr_request_type] = @tpi_request_type
+					   AND [pr_request_id] = @tpi_request_id
+					
+					   SET @bResult = 1						  
+
+				  END
+
+				  ELSE
+
+				  BEGIN
+
+						 INSERT INTO [dbo].[tb_tpi_master] ( tpi_fsize_code, tpi_ftype_code, tpi_fstype_code, tpi_cut_code, tpi_cut_std_code, tpi_cut_std_name,
+						 tpi_dim_name, tpi_dim_code, tpi_dim_scrnval, tpi_dim_dwgval, tpi_cut_application, tpi_isApproved, tpi_isActive, tpi_verno, tpi_createdate,
+						 tpi_createby, tpi_approvedate, tpi_approveby, tpi_request_type, tpi_request_id )     
+					     SELECT @fileSize ,@FileTypeCode ,@FileSubType, @fileCutType, @cutStandardCode, @cutStandardName, REPLACE(@prc_parameter_value,' ','')
+								,@tpi_dim_code, @pm_dim_parm_scrnvalue, @pm_dim_parm_dwgvalue, @prc_parameter_name,'N', 0, @fcl_verno, GetDate(), @fcl_createby
+								,GetDate(), @fcl_createby, @tpi_request_type, @tpi_request_id
+			
+						 UPDATE [dbo].[tb_production_sku] SET [pr_cut_standard] = @cutStandardCode WHERE [pr_request_type] = @tpi_request_type
+						 and [pr_request_id] = @tpi_request_id
+
+						 SET @bResult = 1	
+
+				  END    
+                             
+			    COMMIT TRANSACTION				
+
+				SET @intFlag = @intFlag + 1
+
+		   END TRY
+
+		   BEGIN CATCH
+
+				 ROLLBACK TRANSACTION  
+
+				 SET @bResult = 0
+				
+				 SELECT ERROR_MESSAGE(), ERROR_NUMBER()
+
+		   END CATCH
+		   
+		   END
+		    
+		   SELECT @bResult AS Result
+	  END --update
+	  ________________________________________________________________________________________________________________________
+	  
+	  
+	  --Insert
+	  
+	  USE [Nichrome_DID-DOIT]
+GO
+/****** Object:  StoredProcedure [dbo].[usp_UploadPersonRegionGroupMaster_ExcelSheet]    Script Date: 25-09-2019 10:49:36 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+/*-------------------------------------------------------------------------------------------------------------
+	Created By			:	Deepak
+	Created On			:	23th SEP, 2019
+	Last Modified By	:	 
+	Last Modified On	:	 
+	Input Variables		:	@UplaodBudgetXML XML
+	                       
+							 
+	Output Parameters	:	None
+	Resultsets			:	-
+	Sample Execution	:	execute [usp_UploadPersonRegionGroupMaster_ExcelSheet] '<?xml version="1.0" encoding="UTF-8"?>
+							<Uplaodgrprgn_mstr>
+							   <Uplaodgrprgn_mstrData>
+							      <pgr_region>ALL</pgr_region>
+							      <pgr_group>ALL</pgr_group>
+							      <pgr_country>ALL</pgr_country>
+							      <pgr_state>ALL</pgr_state>
+							      <pgr_person>27-12-2017 12:56:51</pgr_person>
+							 </Uplaodgrprgn_mstrData>
+							 </Uplaodgrprgn_mstr>'
+
+									 
+									 
+	Purpose				:	To usp_UploadPersonRegionGroupMaster_ExcelSheet	
+	Revision			:	None 
+	--------------------------------------------------------------------------------------------------------------------------------------------------*/
+ALTER PROCEDURE [dbo].[usp_UploadPersonRegionGroupMaster_ExcelSheet]	
+	@UplaodBudgetXML XML
+AS
+BEGIN
+  
+    SET NOCOUNT ON;
+	DECLARE @bResult BIT = 0
+
+ 	BEGIN TRY		
+		 
+		TRUNCATE TABLE tbl_grprgn_mstr
+
+		BEGIN TRANSACTION
+
+		--Update tbl_budget_revenue SET rv_isActive = 0 
+
+        insert into tbl_grprgn_mstr( pgr_region, pgr_group, pgr_country, pgr_state, pgr_person, ModifiedDate )		
+		SELECT [Table].[Column].value('pgr_region[1]', 'VARCHAR(100)') as 'pgr_region',
+			   [Table].[Column].value('pgr_group[1]', 'VARCHAR(100)') as 'pgr_group',
+			   [Table].[Column].value('pgr_country[1]', 'VARCHAR(100)') as 'pgr_country',  
+			   [Table].[Column].value('pgr_state[1]', 'VARCHAR(100)') as 'pgr_state',  
+			   [Table].[Column].value('pgr_person[1]', 'VARCHAR(100)') as 'pgr_person',						   		
+			   getdate() as 'ob_createddate'
+	
+    	FROM @UplaodBudgetXML.nodes('Uplaodgrprgn_mstr/Uplaodgrprgn_mstrData') AS [Table]([Column])  
+		 
+	    SET @bResult = 1
+		
+		COMMIT
+
+		END TRY
+
+		BEGIN CATCH
+
+		   ROLLBACK
+		 
+		   SET @bResult = 0
+
+		   SELECT ERROR_MESSAGE(), ERROR_NUMBER()
+
+		END CATCH
+
+	 SELECT @bResult AS Result
+
+END
+
+___________________________________________________________________________________________________________________________________________
+
+					StringBuilder sb_SalesRevenueBudgetUpload = new StringBuilder();
+					sb_SalesRevenueBudgetUpload.AppendLine("<UplaodSalesRevenueBudget>");
+
+                while (odr.Read())
+                {
+                    sb_SalesRevenueBudgetUpload.AppendLine("<UplaodSalesRevenueBudgetData>");
+                    sb_SalesRevenueBudgetUpload.AppendLine("<rv_sales_executive>" + fy + "</rv_sales_executive>");
+                    sb_SalesRevenueBudgetUpload.AppendLine("<rv_region>" + odr[0].ToString() + "</rv_region>");
+                    sb_SalesRevenueBudgetUpload.AppendLine("<rv_group>" + odr[1].ToString() + "</rv_group>");
+                    sb_SalesRevenueBudgetUpload.AppendLine("<ob_region>" + odr[2].ToString() + "</ob_region>");
+                    sb_SalesRevenueBudgetUpload.AppendLine("<ob_segment>" + odr[3].ToString() + "</ob_segment>");
+                    sb_SalesRevenueBudgetUpload.AppendLine("<ob_cost_category>" + odr[4].ToString() + "</ob_cost_category>");
+                    sb_SalesRevenueBudgetUpload.AppendLine("<ob_sales_category>" + odr[5].ToString() + "</ob_sales_category>");
+                    sb_SalesRevenueBudgetUpload.AppendLine("<ob_total_mtrl_cost>" + odr[6].ToString() + "</ob_total_mtrl_cost>");
+                    sb_SalesRevenueBudgetUpload.AppendLine("<ob_total_mtrl_cost_pct>" + odr[7].ToString() + "</ob_total_mtrl_cost_pct>");
+                    sb_SalesRevenueBudgetUpload.AppendLine("<ob_sale_price>" + odr[8].ToString() + "</ob_sale_price>");
+                    sb_SalesRevenueBudgetUpload.AppendLine("<ob_sale_price_currency>" + odr[9].ToString() + "</ob_sale_price_currency>");
+                    sb_SalesRevenueBudgetUpload.AppendLine("<ob_exchange_rate_to_inr>" + odr[10].ToString() + "</ob_exchange_rate_to_inr>");
+                    sb_SalesRevenueBudgetUpload.AppendLine("<ob_currency_sale>" + odr[11].ToString() + "</ob_currency_sale>");
+                    sb_SalesRevenueBudgetUpload.AppendLine("<ob_curr_year_budget_qty>" + odr[12].ToString() + "</ob_curr_year_budget_qty>");
+                    sb_SalesRevenueBudgetUpload.AppendLine("<ob_curr_year_budget_val>" + odr[13].ToString() + "</ob_curr_year_budget_val>");
+                    sb_SalesRevenueBudgetUpload.AppendLine("<ob_q1_qty>" + odr[14].ToString() + "</ob_q1_qty>");
+                    sb_SalesRevenueBudgetUpload.AppendLine("<ob_q1_val>" + odr[15].ToString() + "</ob_q1_val>");
+                    sb_SalesRevenueBudgetUpload.AppendLine("<ob_q2_qty>" + odr[16].ToString() + "</ob_q2_qty>");
+                    sb_SalesRevenueBudgetUpload.AppendLine("<ob_q2_val>" + odr[17].ToString() + "</ob_q2_val>");
+                    sb_SalesRevenueBudgetUpload.AppendLine("<ob_q3_qty>" + odr[18].ToString() + "</ob_q3_qty>");
+                    sb_SalesRevenueBudgetUpload.AppendLine("<ob_q3_val>" + odr[19].ToString() + "</ob_q3_val>");
+                    sb_SalesRevenueBudgetUpload.AppendLine("<ob_q4_qty>" + odr[20].ToString() + "</ob_q4_qty>");
+                    sb_SalesRevenueBudgetUpload.AppendLine("<ob_q4_val>" + odr[21].ToString() + "</ob_q4_val>");
+					sb_SalesRevenueBudgetUpload.AppendLine("<ob_q1_qty>" + odr[14].ToString() + "</ob_q1_qty>");
+                    sb_SalesRevenueBudgetUpload.AppendLine("<ob_q1_val>" + odr[15].ToString() + "</ob_q1_val>");
+                    sb_SalesRevenueBudgetUpload.AppendLine("<ob_q2_qty>" + odr[16].ToString() + "</ob_q2_qty>");
+                    sb_SalesRevenueBudgetUpload.AppendLine("<ob_q2_val>" + odr[17].ToString() + "</ob_q2_val>");
+                    sb_SalesRevenueBudgetUpload.AppendLine("<ob_q3_qty>" + odr[18].ToString() + "</ob_q3_qty>");
+                    sb_SalesRevenueBudgetUpload.AppendLine("<ob_q3_val>" + odr[19].ToString() + "</ob_q3_val>");
+                    sb_SalesRevenueBudgetUpload.AppendLine("<ob_q4_qty>" + odr[20].ToString() + "</ob_q4_qty>");
+                    sb_SalesRevenueBudgetUpload.AppendLine("<ob_q4_val>" + odr[21].ToString() + "</ob_q4_val>");
+                    sb_SalesRevenueBudgetUpload.AppendLine("</UplaodSalesRevenueBudgetData>");                   
+                }
+                sb_budgetUpload.AppendLine("</UplaodSalesRevenueBudget>");
+                string xmlData = sb_budgetUpload.ToString().Replace("&", "&amp;").Replace(" <", "<").Replace("> ", ">");
+
+                OemKraKpi _OemKraKpi = new OemKraKpi();
+                string strResult = string.Empty;
+                Hashtable hInputPara = new Hashtable();
+                string SynonymName = string.Empty;
+
+                hInputPara.Add("@UplaodBudgetXML", xmlData);
+                strResult = _OemKraKpi.UploadBudget_ExcelSheet(hInputPara);
+
+                if(strResult=="Inserted")
+                Page.ClientScript.RegisterStartupScript(GetType(), "msgbox", "alert('Order Booking Budget has been inserted Successfully.');", true);
+                else
+                Page.ClientScript.RegisterStartupScript(GetType(), "msgbox", "alert('Caught error while uploading data.');", true);

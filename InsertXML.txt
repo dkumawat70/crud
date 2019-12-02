@@ -1,0 +1,117 @@
+USE [Nichrome_DID-DOIT]
+GO
+/****** Object:  StoredProcedure [dbo].[sp_InsertXMLSalesRevenue]    Script Date: 23-09-2019 12:18:13 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+ALTER PROCEDURE [dbo].[sp_InsertXMLSalesRevenue]
+	@SalesRevenueXML XML
+
+AS
+BEGIN
+
+
+	
+	INSERT INTO tbl_budget_revenue
+	([rv_curr_fy]
+	,[rv_sales_executive]
+	,[rv_region]
+	,[rv_group]
+	,[rv_segment]
+	,[rv_cost_category]
+	,[rv_sales_category]
+	,[rv_total_mtrl_cost]
+	,[rv_total_mtrl_cost_pct]
+	,[rv_sale_price]
+	,[rv_sale_price_currency]
+	,[rv_exchange_rate_to_INR]
+	,[rv_currency_sale]
+	,[rv_mtrl_cost_INR_pct]
+	,[rv_mtrl_cost_USD_pct]
+	,[rv_mtrl_cost_EUR_pct]
+	,[rv_mtrl_cost_YAN_pct]
+	,[rv_curr_year_budget_material_cost]
+	,[rv_curr_year_budget_val]
+	,[rv_apr_yr1_material_cost]
+	,[rv_apr_yr1_material_val]
+	,[rv_may_yr1_material_cost]
+	,[rv_may_yr1_material_val]
+	,[rv_jun_yr1_material_cost]
+	,[rv_jun_yr1_material_val]
+	,[rv_jul_yr1_material_cost]
+	,[rv_jul_yr1_material_val]
+	,[rv_aug_yr1_material_cost]
+	,[rv_aug_yr1_material_val]
+	,[rv_sep_yr1_material_cost]
+	,[rv_sep_yr1_material_val]
+	,[rv_oct_yr1_material_cost]
+	,[rv_oct_yr1_material_val]
+	,[rv_nov_yr1_material_cost]
+	,[rv_nov_yr1_material_val]
+	,[rv_dec_yr1_material_cost]
+	,[rv_dec_yr1_material_val]
+	,[rv_jan_yr2_material_cost]
+	,[rv_jan_yr2_material_val]
+	,[rv_feb_yr2_material_cost]
+	,[rv_feb_yr2_material_val]
+	,[rv_mar_yr2_material_cost]
+	,[rv_mar_yr2_material_val]
+	,[rv_createddate]
+	,[rv_isActive]
+	)
+	SELECT 
+	 [Table].[Column].value('rv_curr_fy[1]', 'nvarchar(100)') as 'rv_curr_fy',
+	 [Table].[Column].value('rv_sales_executive[1]', 'nvarchar(100)') as 'rv_sales_executive',
+	 [Table].[Column].value('rv_region[1]', 'nvarchar(100)') as 'rv_region',  
+	 [Table].[Column].value('rv_group[1]', 'nvarchar(100)') as 'rv_group',  
+	 [Table].[Column].value('rv_segment[1]', 'nvarchar(100)') as 'rv_segment',
+	 [Table].[Column].value('rv_cost_category[1]', 'nvarchar(100)') as 'rv_cost_category',
+	 [Table].[Column].value('rv_sales_category[1]', 'nvarchar(100)') as 'rv_sales_category', 
+	 [Table].[Column].value('rv_total_mtrl_cost[1]', 'nvarchar(100)') as 'rv_total_mtrl_cost',
+	 [Table].[Column].value('rv_total_mtrl_cost_pct[1]', 'nvarchar(100)') as 'rv_total_mtrl_cost_pct',
+	 [Table].[Column].value('rv_sale_price[1]', 'nvarchar(100)') as 'rv_sale_price',
+	 [Table].[Column].value('rv_sale_price_currency[1]', 'nvarchar(100)') as 'rv_sale_price_currency',
+	 [Table].[Column].value('rv_exchange_rate_to_INR[1]', 'nvarchar(100)') as 'rv_exchange_rate_to_INR',
+	 [Table].[Column].value('rv_currency_sale[1]', 'nvarchar(100)') as 'rv_currency_sale',
+	 [Table].[Column].value('rv_mtrl_cost_INR_pct[1]', 'nvarchar(100)') as 'rv_mtrl_cost_INR_pct',
+	 [Table].[Column].value('rv_mtrl_cost_USD_pct[1]', 'nvarchar(100)') as 'rv_mtrl_cost_USD_pct',
+	 [Table].[Column].value('rv_mtrl_cost_EUR_pct[1]', 'nvarchar(100)') as 'rv_mtrl_cost_EUR_pct',
+	 [Table].[Column].value('rv_mtrl_cost_YAN_pct[1]', 'nvarchar(100)') as 'rv_mtrl_cost_YAN_pct',
+	 [Table].[Column].value('rv_curr_year_budget_material_cost[1]', 'nvarchar(100)') as 'rv_curr_year_budget_material_cost',
+	 [Table].[Column].value('rv_curr_year_budget_val[1]', 'nvarchar(100)') as 'rv_curr_year_budget_val',
+	 [Table].[Column].value('rv_apr_yr1_material_cost[1]', 'nvarchar(100)') as 'rv_apr_yr1_material_cost',
+	 [Table].[Column].value('rv_apr_yr1_material_val[1]', 'nvarchar(100)') as 'rv_apr_yr1_material_val',
+	 [Table].[Column].value('rv_may_yr1_material_cost[1]', 'nvarchar(100)') as 'rv_may_yr1_material_cost',
+	 [Table].[Column].value('rv_may_yr1_material_val[1]', 'nvarchar(100)') as 'rv_may_yr1_material_val',
+	 [Table].[Column].value('rv_jun_yr1_material_cost[1]', 'nvarchar(100)') as 'rv_jun_yr1_material_cost',
+	 [Table].[Column].value('rv_jun_yr1_material_val[1]', 'nvarchar(100)') as 'rv_jun_yr1_material_val',
+	 [Table].[Column].value('rv_jul_yr1_material_cost[1]', 'nvarchar(100)') as 'rv_jul_yr1_material_cost',
+	 [Table].[Column].value('rv_jul_yr1_material_val[1]', 'nvarchar(100)') as 'rv_jul_yr1_material_val',
+	 [Table].[Column].value('rv_aug_yr1_material_cost[1]', 'nvarchar(100)') as 'rv_aug_yr1_material_cost',
+	 [Table].[Column].value('rv_aug_yr1_material_val[1]', 'nvarchar(100)') as 'rv_aug_yr1_material_val',
+	 [Table].[Column].value('rv_sep_yr1_material_cost[1]', 'nvarchar(100)') as 'rv_sep_yr1_material_cost',
+	 [Table].[Column].value('rv_sep_yr1_material_val[1]', 'nvarchar(100)') as 'rv_sep_yr1_material_val',
+	 [Table].[Column].value('rv_oct_yr1_material_cost[1]', 'nvarchar(100)') as 'rv_oct_yr1_material_cost',
+	 [Table].[Column].value('rv_oct_yr1_material_val[1]', 'nvarchar(100)') as 'rv_oct_yr1_material_val',
+	 [Table].[Column].value('rv_nov_yr1_material_cost[1]', 'nvarchar(100)') as 'rv_nov_yr1_material_cost',
+	 [Table].[Column].value('rv_nov_yr1_material_val[1]', 'nvarchar(100)') as 'rv_nov_yr1_material_val',
+	 [Table].[Column].value('rv_dec_yr1_material_cost[1]', 'nvarchar(100)') as 'rv_dec_yr1_material_cost',
+	 [Table].[Column].value('rv_dec_yr1_material_val[1]', 'nvarchar(100)') as 'rv_dec_yr1_material_val',
+	 [Table].[Column].value('rv_jan_yr2_material_cost[1]', 'nvarchar(100)') as 'rv_jan_yr2_material_cost',
+	 [Table].[Column].value('rv_jan_yr2_material_val[1]', 'nvarchar(100)') as 'rv_jan_yr2_material_val',
+	 [Table].[Column].value('rv_feb_yr2_material_cost[1]', 'nvarchar(100)') as 'rv_feb_yr2_material_cost',
+	 [Table].[Column].value('rv_feb_yr2_material_val[1]', 'nvarchar(100)') as 'rv_feb_yr2_material_val',
+	 [Table].[Column].value('rv_mar_yr2_material_cost[1]', 'nvarchar(100)') as 'rv_mar_yr2_material_cost',
+	 [Table].[Column].value('rv_mar_yr2_material_val[1]', 'nvarchar(100)') as 'rv_mar_yr2_material_val',
+	 getdate() as 'rv_createddate',
+	 1 as 'rv_isActive'
+	
+	FROM @SalesRevenueXML.nodes('ProductionSKUData/SKUData') AS [Table]([Column])  
+		
+	
+    
+END
+
+

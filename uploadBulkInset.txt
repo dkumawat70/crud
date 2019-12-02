@@ -1,0 +1,283 @@
+   StringBuilder sb_SalesRevenueBudgetUpload = new StringBuilder();
+                sb_SalesRevenueBudgetUpload.AppendLine("<UplaodSalesRevenueBudget>");
+
+                while (odr.Read())
+                {
+                    string fy = OEM_Upload_Sales.GetCurrentFinancialYear();
+                    //rb.rv_curr_fy = fy;
+                    //rb.rv_sales_executive = odr[0].ToString();
+                    //rb.rv_region = odr[1].ToString();
+                    //rb.rv_group = odr[2].ToString();
+                    //rb.rv_segment = odr[3].ToString();
+                    //rb.rv_cost_category = odr[4].ToString();
+                    //rb.rv_sales_category = odr[5].ToString();
+                    //rb.rv_total_material_cost = (odr[6].ToString());
+                    //rb.rv_total_mtrl_cost_pct = (odr[7].ToString());
+                    //rb.rv_sale_price = (odr[8].ToString());
+                    //rb.rv_sale_price_currency = odr[9].ToString();
+                    //rb.rv_exchange_rate_to_INR = odr[10].ToString();
+                    //// rb.rv_sale_price_forex = (odr[11].ToString());
+                    //rb.rv_currency_sale = (odr[11].ToString());
+                    //rb.rv_mtrl_cost_INR_pct = (odr[12].ToString());
+                    //rb.rv_mtrl_cost_USD_pct = (odr[13].ToString());
+                    //rb.rv_mtrl_cost_EUR_pct = (odr[14].ToString());
+                    //rb.rv_mtrl_cost_YAN_pct = (odr[15].ToString());
+                    //rb.rv_curr_year_budget_material_cost = odr[16].ToString();
+                    //rb.rv_curr_year_budget_val = odr[17].ToString();
+                    //rb.rv_apr_yr1_material_cost = (odr[18].ToString());
+                    //rb.rv_apr_yr1_material_val = (odr[19].ToString());
+                    //rb.rv_may_yr1_material_cost = (odr[20].ToString());
+                    //rb.rv_may_yr1_material_val = (odr[21].ToString());
+                    //rb.rv_jun_yr1_material_cost = (odr[22].ToString());
+                    //rb.rv_jun_yr1_material_val = (odr[23].ToString());
+                    //rb.rv_jul_yr1_material_cost = (odr[24].ToString());
+                    //rb.rv_jul_yr1_material_val = (odr[25].ToString());
+                    //rb.rv_aug_yr1_material_cost = (odr[26].ToString());
+                    //rb.rv_aug_yr1_material_val = (odr[27].ToString());
+                    //rb.rv_sep_yr1_material_cost = (odr[28].ToString());
+                    //rb.rv_sep_yr1_material_val = (odr[29].ToString());
+                    //rb.rv_oct_yr1_material_cost = (odr[30].ToString());
+                    //rb.rv_oct_yr1_material_val = (odr[31].ToString());
+                    //rb.rv_nov_yr1_material_cost = (odr[32].ToString());
+                    //rb.rv_nov_yr1_material_val = (odr[33].ToString());
+                    //rb.rv_dec_yr1_material_cost = (odr[34].ToString());
+                    //rb.rv_dec_yr1_material_val = (odr[35].ToString());
+                    //rb.rv_jan_yr2_material_cost = (odr[36].ToString());
+                    //rb.rv_jan_yr2_material_val = (odr[37].ToString());
+                    //rb.rv_feb_yr2_material_cost = (odr[38].ToString());
+                    //rb.rv_feb_yr2_material_val = (odr[39].ToString());
+                    //rb.rv_mar_yr2_material_cost = (odr[40].ToString());
+                    //rb.rv_mar_yr2_material_val = (odr[41].ToString());
+                    // DbManeger.insertrevenuebudgetbudgets(rb);
+
+                    sb_SalesRevenueBudgetUpload.AppendLine("<UplaodSalesRevenueBudgetData>");
+                    sb_SalesRevenueBudgetUpload.AppendLine("<rv_curr_fy>" + fy + "</rv_curr_fy>");
+                    sb_SalesRevenueBudgetUpload.AppendLine("<rv_sales_executive>" + odr[0].ToString() + "</rv_sales_executive>");
+                    sb_SalesRevenueBudgetUpload.AppendLine("<rv_region>" + odr[1].ToString() + "</rv_region>");
+                    sb_SalesRevenueBudgetUpload.AppendLine("<rv_group>" + odr[2].ToString() + "</rv_group>");
+                    sb_SalesRevenueBudgetUpload.AppendLine("<rv_segment>" + odr[3].ToString() + "</rv_segment>");
+                    sb_SalesRevenueBudgetUpload.AppendLine("<rv_cost_category>" + odr[4].ToString() + "</rv_cost_category>");
+                    sb_SalesRevenueBudgetUpload.AppendLine("<rv_sales_category>" + odr[5].ToString() + "</rv_sales_category>");
+                    sb_SalesRevenueBudgetUpload.AppendLine("<rv_total_mtrl_cost>" + odr[6].ToString() + "</rv_total_mtrl_cost>");
+                    sb_SalesRevenueBudgetUpload.AppendLine("<rv_total_mtrl_cost_pct>" + odr[7].ToString() + "</rv_total_mtrl_cost_pct>");
+                    sb_SalesRevenueBudgetUpload.AppendLine("<rv_sale_price>" + odr[8].ToString() + "</rv_sale_price>");
+                    sb_SalesRevenueBudgetUpload.AppendLine("<rv_sale_price_currency>" + odr[9].ToString() + "</rv_sale_price_currency>");
+                    sb_SalesRevenueBudgetUpload.AppendLine("<rv_exchange_rate_to_INR>" + odr[10].ToString() + "</rv_exchange_rate_to_INR>");
+                    sb_SalesRevenueBudgetUpload.AppendLine("<rv_currency_sale>" + odr[11].ToString() + "</rv_currency_sale>");
+                    sb_SalesRevenueBudgetUpload.AppendLine("<rv_mtrl_cost_INR_pct>" + odr[12].ToString() + "</rv_mtrl_cost_INR_pct>");
+                    sb_SalesRevenueBudgetUpload.AppendLine("<rv_mtrl_cost_USD_pct>" + odr[13].ToString() + "</rv_mtrl_cost_USD_pct>");
+                    sb_SalesRevenueBudgetUpload.AppendLine("<rv_mtrl_cost_EUR_pct>" + odr[14].ToString() + "</rv_mtrl_cost_EUR_pct>");
+                    sb_SalesRevenueBudgetUpload.AppendLine("<rv_mtrl_cost_YAN_pct>" + odr[15].ToString() + "</rv_mtrl_cost_YAN_pct>");
+                    sb_SalesRevenueBudgetUpload.AppendLine("<rv_curr_year_budget_material_cost>" + odr[16].ToString() + "</rv_curr_year_budget_material_cost>");
+                    sb_SalesRevenueBudgetUpload.AppendLine("<rv_curr_year_budget_val>" + odr[17].ToString() + "</rv_curr_year_budget_val>");
+                    sb_SalesRevenueBudgetUpload.AppendLine("<rv_apr_yr1_material_cost>" + odr[18].ToString() + "</rv_apr_yr1_material_cost>");
+                    sb_SalesRevenueBudgetUpload.AppendLine("<rv_apr_yr1_material_val>" + odr[19].ToString() + "</rv_apr_yr1_material_val>");
+                    sb_SalesRevenueBudgetUpload.AppendLine("<rv_may_yr1_material_cost>" + odr[20].ToString() + "</rv_may_yr1_material_cost>");
+                    sb_SalesRevenueBudgetUpload.AppendLine("<rv_may_yr1_material_val>" + odr[21].ToString() + "</rv_may_yr1_material_val>");
+                    sb_SalesRevenueBudgetUpload.AppendLine("<rv_jun_yr1_material_cost>" + odr[22].ToString() + "</rv_jun_yr1_material_cost>");
+                    sb_SalesRevenueBudgetUpload.AppendLine("<rv_jun_yr1_material_val>" + odr[23].ToString() + "</rv_jun_yr1_material_val>");
+                    sb_SalesRevenueBudgetUpload.AppendLine("<rv_jul_yr1_material_cost>" + odr[24].ToString() + "</rv_jul_yr1_material_cost>");
+                    sb_SalesRevenueBudgetUpload.AppendLine("<rv_jul_yr1_material_val>" + odr[25].ToString() + "</rv_jul_yr1_material_val>");
+                    sb_SalesRevenueBudgetUpload.AppendLine("<rv_aug_yr1_material_cost>" + odr[26].ToString() + "</rv_aug_yr1_material_cost>");
+                    sb_SalesRevenueBudgetUpload.AppendLine("<rv_aug_yr1_material_val>" + odr[27].ToString() + "</rv_aug_yr1_material_val>");
+                    sb_SalesRevenueBudgetUpload.AppendLine("<rv_sep_yr1_material_cost>" + odr[28].ToString() + "</rv_sep_yr1_material_cost>");
+                    sb_SalesRevenueBudgetUpload.AppendLine("<rv_sep_yr1_material_val>" + odr[29].ToString() + "</rv_sep_yr1_material_val>");
+                    sb_SalesRevenueBudgetUpload.AppendLine("<rv_oct_yr1_material_cost>" + odr[30].ToString() + "</rv_oct_yr1_material_cost>");
+                    sb_SalesRevenueBudgetUpload.AppendLine("<rv_oct_yr1_material_val>" + odr[31].ToString() + "</rv_oct_yr1_material_val>");
+                    sb_SalesRevenueBudgetUpload.AppendLine("<rv_nov_yr1_material_cost>" + odr[32].ToString() + "</rv_nov_yr1_material_cost>");
+                    sb_SalesRevenueBudgetUpload.AppendLine("<rv_nov_yr1_material_val>" + odr[33].ToString() + "</rv_nov_yr1_material_val>");
+                    sb_SalesRevenueBudgetUpload.AppendLine("<rv_dec_yr1_material_cost>" + odr[34].ToString() + "</rv_dec_yr1_material_cost>");
+                    sb_SalesRevenueBudgetUpload.AppendLine("<rv_dec_yr1_material_val>" + odr[35].ToString() + "</rv_dec_yr1_material_val>");
+                    sb_SalesRevenueBudgetUpload.AppendLine("<rv_jan_yr2_material_cost>" + odr[36].ToString() + "</rv_jan_yr2_material_cost>");
+                    sb_SalesRevenueBudgetUpload.AppendLine("<rv_jan_yr2_material_val>" + odr[37].ToString() + "</rv_jan_yr2_material_val>");
+                    sb_SalesRevenueBudgetUpload.AppendLine("<rv_feb_yr2_material_cost>" + odr[38].ToString() + "</rv_feb_yr2_material_cost>");
+                    sb_SalesRevenueBudgetUpload.AppendLine("<rv_feb_yr2_material_val>" + odr[39].ToString() + "</rv_feb_yr2_material_val>");
+                    sb_SalesRevenueBudgetUpload.AppendLine("<rv_mar_yr2_material_cost>" + odr[40].ToString() + "</rv_mar_yr2_material_cost>");
+                    sb_SalesRevenueBudgetUpload.AppendLine("<rv_mar_yr2_material_val>" + odr[41].ToString() + "</rv_mar_yr2_material_val>");                   
+                    sb_SalesRevenueBudgetUpload.AppendLine("</UplaodSalesRevenueBudgetData>");
+                }
+                sb_SalesRevenueBudgetUpload.AppendLine("</UplaodSalesRevenueBudget>");
+                string xmlData = sb_SalesRevenueBudgetUpload.ToString().Replace("&", "&amp;").Replace(" <", "<").Replace("> ", ">");
+
+                OemKraKpi _OemKraKpi = new OemKraKpi();
+                string strResult = string.Empty;
+                Hashtable hInputPara = new Hashtable();
+                string SynonymName = string.Empty;
+
+                hInputPara.Add("@UplaodBudgetXML", xmlData);
+                strResult = _OemKraKpi.UploadSalesRevenueBudget_ExcelSheet(hInputPara);
+
+
+
+
+
+
+______________________________________________________________________________________________
+
+
+
+USE [Nichrome_DID-DOIT]
+GO
+/****** Object:  StoredProcedure [dbo].[usp_UplaodSalesRevenueBudget_ExcelSheet]    Script Date: 04-10-2019 11:58:46 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+/*-------------------------------------------------------------------------------------------------------------
+	Created By			:	Deepak
+	Created On			:	23th SEP, 2019
+	Last Modified By	:	 
+	Last Modified On	:	 
+	Input Variables		:	@UplaodBudgetXML XML
+	                       
+							 
+	Output Parameters	:	None
+	Resultsets			:	-
+	Sample Execution	:	execute [usp_UplaodSalesRevenueBudget_ExcelSheet] '<?xml version="1.0" encoding="UTF-8"?>
+							<UplaodSalesRevenueBudget>
+							<UplaodSalesRevenueBudgetData>
+							   <rv_curr_fy>2019-2020</rv_curr_fy>
+							   <rv_sales_executive>Manish</rv_sales_executive>
+							   <rv_region>West 3</rv_region>
+							   <rv_group>West-3</rv_group>
+							   <rv_segment>Dairy Products Liquid</rv_segment>
+							   <rv_cost_category>Domestic-FILPACK CMD</rv_cost_category>
+							   <rv_sales_category>FILPACK CMD ALPHA WITH MECH FILLER</rv_sales_category>
+							   <rv_total_mtrl_cost>704525</rv_total_mtrl_cost>
+							   <rv_total_mtrl_cost_pct>0.61</rv_total_mtrl_cost_pct>
+							   <rv_sale_price>1154959.01639344</rv_sale_price>
+							   <rv_sale_price_currency>INR</rv_sale_price_currency>
+							   <rv_exchange_rate_to_INR>1</rv_exchange_rate_to_INR>
+							   <rv_currency_sale>1154959.01639344</rv_currency_sale>
+							   <rv_mtrl_cost_INR_pct>0.45</rv_mtrl_cost_INR_pct>
+							   <rv_mtrl_cost_USD_pct>0.25</rv_mtrl_cost_USD_pct>
+							   <rv_mtrl_cost_EUR_pct>0.17</rv_mtrl_cost_EUR_pct>
+							   <rv_mtrl_cost_YAN_pct>0.13</rv_mtrl_cost_YAN_pct>
+							   <rv_curr_year_budget_material_cost>1902217.5</rv_curr_year_budget_material_cost>
+							   <rv_curr_year_budget_val>3118394.7</rv_curr_year_budget_val>
+							   <rv_apr_yr1_material_cost>211357.5</rv_apr_yr1_material_cost>
+							   <rv_apr_yr1_material_val>346488.3</rv_apr_yr1_material_val>
+							   <rv_may_yr1_material_cost>211357.5</rv_may_yr1_material_cost>
+							   <rv_may_yr1_material_val>346488.3</rv_may_yr1_material_val>
+							   <rv_jun_yr1_material_cost>211357.5</rv_jun_yr1_material_cost>
+							   <rv_jun_yr1_material_val>346488.3</rv_jun_yr1_material_val>
+							   <rv_jul_yr1_material_cost>0</rv_jul_yr1_material_cost>
+							   <rv_jul_yr1_material_val>0</rv_jul_yr1_material_val>
+							   <rv_aug_yr1_material_cost>0</rv_aug_yr1_material_cost>
+							   <rv_aug_yr1_material_val>0</rv_aug_yr1_material_val>
+							   <rv_sep_yr1_material_cost>0</rv_sep_yr1_material_cost>
+							   <rv_sep_yr1_material_val>0</rv_sep_yr1_material_val>
+							   <rv_oct_yr1_material_cost>211357.5</rv_oct_yr1_material_cost>
+							   <rv_oct_yr1_material_val>346488.3</rv_oct_yr1_material_val>
+							   <rv_nov_yr1_material_cost>211357.5</rv_nov_yr1_material_cost>
+							   <rv_nov_yr1_material_val>346488.3</rv_nov_yr1_material_val>
+							   <rv_dec_yr1_material_cost>211357.5</rv_dec_yr1_material_cost>
+							   <rv_dec_yr1_material_val>346488.3</rv_dec_yr1_material_val>
+							   <rv_jan_yr2_material_cost>211357.5</rv_jan_yr2_material_cost>
+							   <rv_jan_yr2_material_val>346488.3</rv_jan_yr2_material_val>
+							   <rv_feb_yr2_material_cost>211357.5</rv_feb_yr2_material_cost>
+							   <rv_feb_yr2_material_val>346488.3</rv_feb_yr2_material_val>
+							   <rv_mar_yr2_material_cost>211357.5</rv_mar_yr2_material_cost>
+							   <rv_mar_yr2_material_val>346488.3</rv_mar_yr2_material_val>
+							</UplaodSalesRevenueBudgetData>
+							</UplaodSalesRevenueBudget>'
+
+
+									 
+									 
+	Purpose				:	To UplaodSalesRevenueBudget_ExcelSheet	
+	Revision			:	None 
+	--------------------------------------------------------------------------------------------------------------------------------------------------*/
+ALTER PROCEDURE [dbo].[usp_UplaodSalesRevenueBudget_ExcelSheet]	
+	@UplaodBudgetXML XML
+AS
+BEGIN
+  
+    SET NOCOUNT ON;
+	DECLARE @bResult BIT = 0
+
+ 	BEGIN TRY		
+		 
+		  TRUNCATE TABLE tbl_budget_revenue
+
+		BEGIN TRANSACTION
+
+		--Update tbl_budget_revenue SET rv_isActive = 0 
+
+        insert into tbl_budget_revenue( rv_curr_fy, rv_sales_executive, rv_region,rv_group, rv_segment, rv_cost_category, rv_sales_category,
+										rv_total_mtrl_cost,	rv_total_mtrl_cost_pct, rv_sale_price, rv_sale_price_currency, rv_exchange_rate_to_INR,
+										rv_currency_sale, rv_mtrl_cost_INR_pct, rv_mtrl_cost_USD_pct, rv_mtrl_cost_EUR_pct, rv_mtrl_cost_YAN_pct,
+										rv_curr_year_budget_material_cost, rv_curr_year_budget_val, rv_apr_yr1_material_cost, rv_apr_yr1_material_val,
+										rv_may_yr1_material_cost, rv_may_yr1_material_val, rv_jun_yr1_material_cost, rv_jun_yr1_material_val,
+										rv_jul_yr1_material_cost, rv_jul_yr1_material_val, rv_aug_yr1_material_cost, rv_aug_yr1_material_val,
+										rv_sep_yr1_material_cost, rv_sep_yr1_material_val, rv_oct_yr1_material_cost, rv_oct_yr1_material_val,
+										rv_nov_yr1_material_cost, rv_nov_yr1_material_val, rv_dec_yr1_material_cost, rv_dec_yr1_material_val,
+										rv_jan_yr2_material_cost, rv_jan_yr2_material_val, rv_feb_yr2_material_cost, rv_feb_yr2_material_val,
+										rv_mar_yr2_material_cost, rv_mar_yr2_material_val, rv_createddate,rv_isActive )		
+		SELECT [Table].[Column].value('rv_curr_fy[1]', 'VARCHAR(100)') as 'rv_curr_fy',
+			   [Table].[Column].value('rv_sales_executive[1]', 'VARCHAR(100)') as 'rv_sales_executive',
+			   [Table].[Column].value('rv_region[1]', 'VARCHAR(100)') as 'rv_region',  
+			   [Table].[Column].value('rv_group[1]', 'VARCHAR(100)') as 'rv_group',  
+			   [Table].[Column].value('rv_segment[1]', 'VARCHAR(100)') as 'rv_segment',
+			   [Table].[Column].value('rv_cost_category[1]', 'VARCHAR(100)') as 'rv_cost_category',
+			   [Table].[Column].value('rv_sales_category[1]', 'VARCHAR(100)') as 'rv_sales_category', 
+			   [Table].[Column].value('rv_total_mtrl_cost[1]', 'VARCHAR(100)') as 'rv_total_mtrl_cost',
+			   [Table].[Column].value('rv_total_mtrl_cost_pct[1]', 'VARCHAR(100)') as 'rv_total_mtrl_cost_pct',
+			   [Table].[Column].value('rv_sale_price[1]', 'VARCHAR(100)') as 'rv_sale_price',
+			   [Table].[Column].value('rv_sale_price_currency[1]', 'VARCHAR(100)') as 'rv_sale_price_currency',
+			   [Table].[Column].value('rv_exchange_rate_to_INR[1]', 'VARCHAR(100)') as 'rv_exchange_rate_to_INR',
+			   [Table].[Column].value('rv_currency_sale[1]', 'VARCHAR(100)') as 'rv_currency_sale',
+			   [Table].[Column].value('rv_mtrl_cost_INR_pct[1]', 'VARCHAR(100)') as 'rv_mtrl_cost_INR_pct',
+			   [Table].[Column].value('rv_mtrl_cost_USD_pct[1]', 'VARCHAR(100)') as 'rv_mtrl_cost_USD_pct',
+			   [Table].[Column].value('rv_mtrl_cost_EUR_pct[1]', 'VARCHAR(100)') as 'rv_mtrl_cost_EUR_pct',
+			   [Table].[Column].value('rv_mtrl_cost_YAN_pct[1]', 'VARCHAR(100)') as 'rv_mtrl_cost_YAN_pct',
+			   [Table].[Column].value('rv_curr_year_budget_material_cost[1]', 'VARCHAR(100)') as 'rv_curr_year_budget_material_cost',
+			   [Table].[Column].value('rv_curr_year_budget_val[1]', 'VARCHAR(100)') as 'rv_curr_year_budget_val',
+			   [Table].[Column].value('rv_apr_yr1_material_cost[1]', 'VARCHAR(100)') as 'rv_apr_yr1_material_cost',
+			   [Table].[Column].value('rv_apr_yr1_material_val[1]', 'VARCHAR(100)') as 'rv_apr_yr1_material_val',
+			   [Table].[Column].value('rv_may_yr1_material_cost[1]', 'VARCHAR(100)') as 'rv_may_yr1_material_cost',
+			   [Table].[Column].value('rv_may_yr1_material_val[1]', 'VARCHAR(100)') as 'rv_may_yr1_material_val',
+			   [Table].[Column].value('rv_jun_yr1_material_cost[1]', 'VARCHAR(100)') as 'rv_jun_yr1_material_cost',
+			   [Table].[Column].value('rv_jun_yr1_material_val[1]', 'VARCHAR(100)') as 'rv_jun_yr1_material_val',
+			   [Table].[Column].value('rv_jul_yr1_material_cost[1]', 'VARCHAR(100)') as 'rv_jul_yr1_material_cost',  
+			   [Table].[Column].value('rv_jul_yr1_material_val[1]', 'VARCHAR(100)') as 'rv_jul_yr1_material_val',  
+			   [Table].[Column].value('rv_aug_yr1_material_cost[1]', 'VARCHAR(100)') as 'rv_aug_yr1_material_cost',
+			   [Table].[Column].value('rv_aug_yr1_material_val[1]', 'VARCHAR(100)') as 'rv_aug_yr1_material_val',
+			   [Table].[Column].value('rv_sep_yr1_material_cost[1]', 'VARCHAR(100)') as 'rv_sep_yr1_material_cost', 
+			   [Table].[Column].value('rv_sep_yr1_material_val[1]', 'VARCHAR(100)') as 'rv_sep_yr1_material_val',
+			   [Table].[Column].value('rv_oct_yr1_material_cost[1]', 'VARCHAR(100)') as 'rv_oct_yr1_material_cost',
+			   [Table].[Column].value('rv_oct_yr1_material_val[1]', 'VARCHAR(100)') as 'rv_oct_yr1_material_val',
+			   [Table].[Column].value('rv_nov_yr1_material_cost[1]', 'VARCHAR(100)') as 'rv_nov_yr1_material_cost',
+			   [Table].[Column].value('rv_nov_yr1_material_val[1]', 'VARCHAR(100)') as 'rv_nov_yr1_material_val',
+			   [Table].[Column].value('rv_dec_yr1_material_cost[1]', 'VARCHAR(100)') as 'rv_dec_yr1_material_cost',
+			   [Table].[Column].value('rv_dec_yr1_material_val[1]', 'VARCHAR(100)') as 'rv_dec_yr1_material_val',
+			   [Table].[Column].value('rv_jan_yr2_material_cost[1]', 'VARCHAR(100)') as 'rv_jan_yr2_material_cost',
+			   [Table].[Column].value('rv_jan_yr2_material_val[1]', 'VARCHAR(100)') as 'rv_jan_yr2_material_val',
+			   [Table].[Column].value('rv_feb_yr2_material_cost[1]', 'VARCHAR(100)') as 'rv_feb_yr2_material_cost',
+			   [Table].[Column].value('rv_feb_yr2_material_val[1]', 'VARCHAR(100)') as 'rv_feb_yr2_material_val',
+			   [Table].[Column].value('rv_mar_yr2_material_cost[1]', 'VARCHAR(100)') as 'rv_mar_yr2_material_cost',
+			   [Table].[Column].value('rv_mar_yr2_material_val[1]', 'VARCHAR(100)') as 'rv_mar_yr2_material_val',			   		
+			   getdate() as 'ob_createddate',
+			   1 as 'ob_isActive'
+	
+    	FROM @UplaodBudgetXML.nodes('UplaodSalesRevenueBudget/UplaodSalesRevenueBudgetData') AS [Table]([Column])  
+		 
+	    SET @bResult = 1
+		
+		COMMIT
+
+		END TRY
+
+		BEGIN CATCH
+
+		   ROLLBACK
+		 
+		   SET @bResult = 0
+
+		   SELECT ERROR_MESSAGE(), ERROR_NUMBER()
+
+		END CATCH
+
+	 SELECT @bResult AS Result
+
+END
