@@ -1,87 +1,139 @@
-﻿@{
-    ViewBag.Title = "Home Page";
+﻿@model CRUDOperationUsingWebApi.Models.tbl_User_Info
+
+@{
+    ViewBag.Title = "Index";
 }
-<script src="~/Scripts/jquery-3.3.1.min.js"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<h2>Index</h2>
+
+<div>
+    <h4>tbl_User_Info</h4>
+
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Edit</th>
+                <th>Delete</th>
+                <th>Firsname</th>
+                <th>Lastname</th>
+                <th>Email</th>
+                <th>Mobile</th>
+                <th>Salary</th>
+                <th>City</th>
+                <th>Image</th>
+            </tr>
+        </thead>
+        <tbody id="tblUser"></tbody>
+    </table>
+    <input type="hidden" id="id" />
+    <input type="text" id="firstname" placeholder="firstname" />
+    <input type="text" id="lastname" placeholder="lastname" />
+    <input type="text" id="email" placeholder="email" />
+    <input type="text" id="mobile" placeholder="mobile" />
+    <input type="text" id="salary" placeholder="salary" />
+    <input type="text" id="city" placeholder="city" />
+    <input type="button" id="Save" value="Save" />
+    <input type="button" id="Update" value="Update" />
+</div>
+
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
 <script>
-    var addArr = [];
-    var row = '';
     $(document).ready(function () {
-                $.ajax({
-                url: '@Url.Action("Getdata", "Home")',
-                data: {},
-                type: 'GET',
-                dataType: "json",
-                success: function (data) {
-                    for (var i = 0; i < data.length; i++) {
-                        row = '<tr><td><div align="center"><input type="checkbox" id="chk_id_' + i + '"  onclick="check(' + i + ',' + data[i].id + ')"></td>';
-                        row += '<td><div align="center"> <i class="fa fa-pencil-square-o" aria-hidden="true" onclick="edit(' + data[i].id + ')"></i></td>';
-                        row += '<td><div align="center"> ' + data[i].id + '</td>';
-                        row += '<td><div align="center"> ' + data[i].firstname + '</td>';
-                        row += '<td><div align="center"> ' + data[i].lastname + '</td>';
-                        row += '<td><div align="center"> ' + data[i].email + '</td>';
-                        row += '<td><div align="center"> ' + data[i].mobile + '</td>';
-                        row += '<td><div align="center"> <img id="Mitemimg" class="qaimg" src="' + data[i].image + '"  style="width:30px"></td>';
-                        row += '<td><div align="center"> ' + data[i].salary + '</td></tr>';
-                        $("#tblImg12").append(row);
-                    }
-                }
-            });
+        var id = $("#id").val();
+        if (id == null)
+            $("#Update").hide();
+        $.getJSON("/api/tbl_User_Info/", function (data) {
+            $.each(data, function (key, val) {
+                $("<tr><td><input type='button' value=" + val.id + " onclick='edit(" + val.id + ")'</td><td><input type='button' value=" + val.id + " onclick='deleteRecord(" + val.id + ")'</td><td>" + val.firstname + "</td><td>" + val.lastname + "</td><td>" + val.email + "</td>)<td>" + val.mobile + "</td><td>" + val.salary + "</td><td>" + val.city + "</td></tr>").appendTo("#tblUser");
+            })
+        });
+
     });
-    function check(i,id) {
-        var isChecked = $("#chk_id_" + i).is(":checked");
-        if (isChecked == true) {
-            addArr.push({ "id": id });
-        } else
-        {
-            for (var i = 0; i < addArr.length; i++) {
-                if (addArr[i].id == id) {
-                    addArr.splice(i, 1);
-                    break;
+    function edit(id) {
+        $.ajax({
+            url: "/api/tbl_User_Info/" + id,
+            type: "get",
+            data: {},
+            datatype: "json",
+            contentType: "application/json",
+            success: function (data) {
+                $("#id").val(data.id);
+                $("#firstname").val(data.firstname);
+                $("#lastname").val(data.lastname);
+                $("#email").val(data.email);
+                $("#mobile").val(data.mobile);
+                $("#salary").val(data.salary);
+                $("#city").val(data.city);
+
+
+                var id = $("#id").val();
+
+                if (id != null && id != "") {
+                    $("#Save").hide();
+                } else {
+                    $("#Update").show();
                 }
             }
-        }
-        if (addArr.length > 0) {
-            $("#btn_delete").show();
-        } else {
-            $("#btn_delete").hide();
-        }
-    }
-    function deleteUser() {
-        for (var i = 0; i < addArr.length; i++) {
-             $.ajax({
-                url: '@Url.Action("DeleteUser", "Home")',
-                 data: { "id": addArr[i].id},
-                type: 'GET',
-                dataType: "json",
-                 success: function (data) {
-                }
-            });
-            alert('Record deleted');
-            location.reload();
-        }
-    }
-    function edit(id) {
-        var url = "../Home/AddUser?id=" + id;
-        window.location.href = url;        
-    }
 
+        });
+    }
+    $("#Save").click(function () {
+        $.ajax({
+            url: "/api/tbl_User_Info",
+            type: "post",
+            data: JSON.stringify({
+                firstname: $("#firstname").val(),
+                lastname: $("#lastname").val(),
+                email: $("#email").val(),
+                mobile: $("#mobile").val(),
+                salary: $("#salary").val(),
+                city: $("#city").val(),
+            }),
+            datatype: "json",
+            contentType: "application/json",
+            success: function (data) {
+                alert("record saved");
+                location.reload();
+            }
+
+        });
+    });
+    $("#Update").click(function () {
+        var id = $("#id").val();
+        $.ajax({
+            url: "/api/tbl_User_Info/" + id,
+            type: "put",
+            data: JSON.stringify({
+                id: $("#id").val(),
+                firstname: $("#firstname").val(),
+                lastname: $("#lastname").val(),
+                email: $("#email").val(),
+                mobile: $("#mobile").val(),
+                salary: $("#salary").val(),
+                city: $("#city").val(),
+            }),
+            datatype: "json",
+            contentType: "application/json",
+            success: function (data) {
+                alert("record updated");
+                location.reload();
+            }
+
+        });
+    });
+    function deleteRecord(id)
+    {
+        $.ajax({
+            url: "api/tbl_User_Info/" + id,
+            type: "delete",
+            datatype: "json",
+            contentType: "application/json",
+            data: { id: id },
+            success: function (data) {
+                alert("record deleted");
+                location.reload();
+            }
+        })
+    }
 </script>
 
-<input type="button" id="btn_delete" onclick="deleteUser()" value="Delete" class="btn btn-danger" style="margin-top:20px;margin-left:10px;display:none" />
-<table class="table" style="margin-top:20px">
-    <thead>
-        <tr>
-            <th style="text-align:center">Delete</th>
-            <th style="text-align:center">Edit</th>
-            <th style="text-align:center">ID</th>
-            <th style="text-align:center">First Name</th>
-            <th style="text-align:center">Last Name</th>
-            <th style="text-align:center">Email</th>
-            <th style="text-align:center">Mobile</th>
-            <th style="text-align:center">Image</th>
-            <th style="text-align:center">Salary</th>
-        </tr>
-    </thead>
-    <tbody id="tblImg12"></tbody>
-</table>
